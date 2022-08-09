@@ -1,0 +1,21 @@
+name: Test Deployment
+
+on:
+  push: # What triggers a deployment. For example, `push`.
+    branches:
+      - main # What branch triggers a deployment. For example, `main`.
+
+jobs:
+  build:
+    name: python-pp # This name appears on the Actions tab in the GitHub UI.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deployment
+        uses: armory/cli-deploy-action@main
+        with:
+          clientId: "${{ secrets.<CLIENTID> }}" # Encrypted Client ID that you created in the CD-as-a-Service Console that has been encrypted with GitHub's encrypted secrets. Replace <CLIENTD> with the name you gave your encrypted secret.
+          clientSecret:  "${{ secrets.<CLIENTSECRET> }}" # Client Secret that you created in the CD-as-a-Service Console that has been encrypted with GitHub's encrypted secrets. Replace <CLIENTSECRET> with the name you gave your encrypted secret.
+          path-to-file: "/path/to/deployment.yaml" # Path to the deployment file.
